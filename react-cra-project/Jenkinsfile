@@ -1,4 +1,5 @@
 pipeline {
+    agent any
     environment {
         GIT_URL = "https://github.com/ssong91DEV/react-project.git/"
     }
