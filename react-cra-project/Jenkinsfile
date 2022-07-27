@@ -8,7 +8,7 @@ pipeline {
         stage("Build and Deploy") {
                 agent {
                     node {
-                        label 'jenkinsNode1'
+                        label 'react-project'
                     }
                 }
             stages {
