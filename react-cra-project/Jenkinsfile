@@ -6,44 +6,47 @@ pipeline {
     
     stages {
         stage("Build and Deploy") {
-                agent {
-                    node {
-                        label 'react-project'
+            agent {
+                node {
+                    label 'react-project'
+                }
+            }
+            stages {
+                stage('Git Pull') {
+                    steps {
+                        git url: "https://github.com/ssong91DEV/react-project.git/",
+                        branch: "main",
+                        poll: true,
+                        changelog: true
                     }
                 }
-            stages {
-                stage('Pull') {
-            steps {
-                git url: "https://github.com/ssong91DEV/react-project.git/", branch: "main", poll: true, changelog: true
-            }
-        }
         
-        stage('React Build') {
-            steps {
-                sh 'npm install -g yarn'
-                sh 'yarn --cwd ./react-cra-project install --network-timeout 100000'
-                sh 'yarn --cwn ./react-cra-project build'
-            }
-        }
-        
-        stage('Build') {
-            steps {
-                sh 'docker build -t basepage/nginx ./react-cra-project/'
-            }
-        }
-        
-        stage('Deploy') {
-            steps {
-                sh 'docker ps -q --filter name=react-nginx-docker | grep -q . && docker stop react-nginx-docker && docker rm react-nginx-docker'
-                sh 'docker run -it -p 80:80 -d --name react-nginx-docker react-nginx'
-            }
-        }
-        
-        stage('Finish') {
-            steps {
-                sh 'docker rmi $(docker images -f "dangling=true" -q)'
-            }
-        }
+                stage('React Build') {
+                    steps {
+                        sh 'npm install -g yarn'
+                        sh 'yarn --cwd ./react-cra-project install --network-timeout 100000'
+                        sh 'yarn --cwd ./react-cra-project build'
+                    }
+                }
+                
+                stage('Build') {
+                    steps {
+                        sh 'docker build -t basepage/nginx ./react-cra-project/'
+                    }
+                }
+                
+                stage('Deploy') {
+                    steps {
+                        sh 'docker ps -q --filter name=react-nginx-docker | grep -q . && docker stop react-nginx-docker && docker rm react-nginx-docker'
+                        sh 'docker run -it -p 80:80 -d --name react-nginx-docker react-nginx'
+                    }
+                }
+                
+                stage('Finish') {
+                    steps {
+                        sh 'docker rmi $(docker images -f "dangling=true" -q)'
+                    }
+                }
             }
         }
     }
