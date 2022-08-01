@@ -36,15 +36,34 @@ pipeline {
                                 }
                             }
                         }
-                        stage("Docker Deploy") {
+
+                        stage("Clean") {
                             steps {
-                                build job: "deploy on docker",
-                                parameters: [
-                                    string(name: 'node', value: 'docker-deploy'),
-                                    string(name: 'name', value: 'react-project'),
-                                    string(name: 'port', value: '80'),
-                                    string(name: 'expose', value: '9120')
-                                ]
+                                script {
+                                    try {
+                                        if(isUnix()) {
+                                            sh('docker stop react-project')
+                                            sh('docker rm react-project')
+                                        } else {
+                                            bat('docker stop react-project')
+                                            bat('docker rm react-project')
+                                        }
+                                    } catch(err) {
+                                        echo err.message
+                                    }
+                                }
+                            }
+                        }
+
+                        stage("Pull Image & Run") {
+                            steps {
+                                script {
+                                    docker.withRegistry("", "dockerhub-91") {
+                                        app = docker.image("songhb91/react-project:latest")
+                                        app.pull()
+                                        app.run("-p 9120:80 --name react-project")
+                                    }
+                                }
                             }
                         }
                     }
