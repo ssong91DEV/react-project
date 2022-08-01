@@ -3,51 +3,76 @@ pipeline {
     environment {
         GIT_URL = "https://github.com/ssong91DEV/react-project.git/"
     }
-    
+
     stages {
-        stage("Build and Deploy") {
+        stage("React-Project Test") {
             agent {
                 node {
                     label 'react-project'
                 }
             }
             stages {
-                stage('Git Pull') {
+                stage("Git Checkout") {
                     steps {
-                        git url: "https://github.com/ssong91DEV/react-project.git/",
+                        git url: GIT_URL,
                         branch: "main",
                         poll: true,
                         changelog: true
                     }
                 }
-        
-                stage('React Build') {
-                    steps {
-                        sh 'npm install -g yarn'
-                        sh 'yarn --cwd ./react-cra-project install --network-timeout 100000'
-                        sh 'yarn --cwd ./react-cra-project build'
-                    }
-                }
-                
-                stage('Build') {
-                    steps {
-                        sh 'docker build -t basepage/nginx ./react-cra-project/'
-                    }
-                }
-                
-                stage('Deploy') {
-                    steps {
-                        sh 'docker ps -q --filter name=react-nginx-docker | grep -q . && docker stop react-nginx-docker && docker rm react-nginx-docker'
-                        sh 'docker run -it -p 80:80 -d --name react-nginx-docker react-nginx'
-                    }
-                }
-                
-                stage('Finish') {
-                    steps {
-                        sh 'docker rmi $(docker images -f "dangling=true" -q)'
-                    }
-                }
             }
         }
     }
+
+    // stages {
+    //     stage('Parallel Stage') {
+    //         parallel {
+    //             stage('Build and Deploy') {
+    //                 agent {
+    //                     node {
+    //                         label 'react-test'
+    //                     }
+    //                 }
+    //                 stages {
+    //                     stage('Checkout') {
+    //                         steps {
+    //                             git url: GIT_URL,
+    //                             branch: "main",
+    //                             poll: true,
+    //                             changelog: true
+    //                         }
+    //                     }
+    //                     stage("Docker Image Build") {
+    //                         steps {
+    //                             script {
+    //                                 dockerImage = docker.build("songhb91/react-project")
+    //                                 dockerImage.push("latest")
+    //                             }
+    //                         }
+    //                     }
+    //                     stage("Docker Image Push") {
+    //                         steps {
+    //                             script {
+    //                                 docker.withRegistry('', "dockerhub-91") {
+    //                                     dockerImage.push()
+    //                                 }
+    //                             }
+    //                         }
+    //                     }
+    //                     stage("Docker Deploy") {
+    //                         steps {
+    //                             build job: "deploy on docker",
+    //                             parameters: [
+    //                                 string(name: 'node', value: 'docker-deploy'),
+    //                                 string(name: 'name', value: 'react-project'),
+    //                                 string(name: 'port', value: '80'),
+    //                                 string(name: 'expose', value: '9120')
+    //                             ]
+    //                         }
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
 }
