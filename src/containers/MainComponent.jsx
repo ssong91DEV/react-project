@@ -13,6 +13,7 @@ const MainComponent = () => {
     <div>
       <div>2022-08-02 NCP 젠킨스 - 깃허브 웹훅 연동</div>
       <div>워커노드 생성 후</div>
+      <div>이 프로젝트를 react-project라는 라벨을 가진 노드에서 빌드</div>
       <div>
         {time.toLocaleDateString()} {time.toLocaleTimeString()}
       </div>
