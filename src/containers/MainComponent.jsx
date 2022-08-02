@@ -15,6 +15,7 @@ const MainComponent = () => {
       <div>워커노드 생성 후</div>
       <div>이 프로젝트를 react-project라는 라벨을 가진 노드에서 빌드</div>
       <div>테스트</div>
+      <div>파이프라인 실행하기</div>
       <div>
         {time.toLocaleDateString()} {time.toLocaleTimeString()}
       </div>
