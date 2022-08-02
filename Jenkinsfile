@@ -7,7 +7,7 @@ pipeline {
                 stage('Build and Deploy') {
                     agent {
                         node {
-                            label 'react-test'
+                            label 'react-project'
                         }
                     }
                     stages {

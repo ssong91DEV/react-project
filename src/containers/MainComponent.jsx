@@ -11,7 +11,7 @@ const MainComponent = () => {
 
   return (
     <div>
-      <div>220801 도커 배포 테스트 1</div>
+      <div>2022-08-02 NCP 젠킨스 - 깃허브 웹훅 연동</div>
       <div>
         {time.toLocaleDateString()} {time.toLocaleTimeString()}
       </div>
