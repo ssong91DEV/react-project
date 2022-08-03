@@ -37,35 +37,35 @@ pipeline {
                             }
                         }
 
-                        // stage("Clean") {
-                        //     steps {
-                        //         script {
-                        //             try {
-                        //                 if(isUnix()) {
-                        //                     sh('docker stop react-project')
-                        //                     sh('docker rm react-project')
-                        //                 } else {
-                        //                     bat('docker stop react-project')
-                        //                     bat('docker rm react-project')
-                        //                 }
-                        //             } catch(err) {
-                        //                 echo err.message
-                        //             }
-                        //         }
-                        //     }
-                        // }
+                        stage("Clean") {
+                            steps {
+                                script {
+                                    try {
+                                        if(isUnix()) {
+                                            sh('docker stop react-project')
+                                            sh('docker rm react-project')
+                                        } else {
+                                            bat('docker stop react-project')
+                                            bat('docker rm react-project')
+                                        }
+                                    } catch(err) {
+                                        echo err.message
+                                    }
+                                }
+                            }
+                        }
 
-                        // stage("Pull Image & Run") {
-                        //     steps {
-                        //         script {
-                        //             docker.withRegistry("", "dockerhub-91") {
-                        //                 app = docker.image("songhb91/react-project:latest")
-                        //                 app.pull()
-                        //                 app.run("-p 9120:80 --name react-project")
-                        //             }
-                        //         }
-                        //     }
-                        // }
+                        stage("Pull Image & Run") {
+                            steps {
+                                script {
+                                    docker.withRegistry("", "dockerhub-91") {
+                                        app = docker.image("songhb91/react-project:latest")
+                                        app.pull()
+                                        app.run("-p 9120:80 --name react-project")
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
