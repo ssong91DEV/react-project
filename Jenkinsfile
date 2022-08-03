@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label 'react-project'
+        label 'react'
     }
     stages {
         stage('Checkout') {
