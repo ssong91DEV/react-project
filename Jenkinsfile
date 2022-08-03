@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label 'react'
+        label 'react-project'
     }
     stages {
         stage('Parallel Stage') {
