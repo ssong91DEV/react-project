@@ -18,6 +18,7 @@ const MainComponent = () => {
       <div>파이프라인 실행하기</div>
       <div>2022-08-03 도커 배포하기</div>
       <div>젠킨스파일 노드수정, parallel stage 제거</div>
+      <div>parallel 지우고 다시 시도</div>
       <div>
         {time.toLocaleDateString()} {time.toLocaleTimeString()}
       </div>
