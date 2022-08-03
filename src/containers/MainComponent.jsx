@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Button from "../components/Button";
 const MainComponent = () => {
   const [time, setTime] = useState(new Date());
 
@@ -21,6 +22,9 @@ const MainComponent = () => {
       <div>parallel 지우고 다시 시도</div>
       <div>
         {time.toLocaleDateString()} {time.toLocaleTimeString()}
+      </div>
+      <div>
+        <Button />
       </div>
     </div>
   );
