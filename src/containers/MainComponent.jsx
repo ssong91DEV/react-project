@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Button from "../components/Button";
+import ImageComponent from "../components/ImageComponent";
 const MainComponent = () => {
   const [time, setTime] = useState(new Date());
 
@@ -24,7 +24,7 @@ const MainComponent = () => {
         {time.toLocaleDateString()} {time.toLocaleTimeString()}
       </div>
       <div>
-        <Button />
+        <ImageComponent />
       </div>
     </div>
   );
