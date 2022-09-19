@@ -13,6 +13,7 @@ const MainComponent = () => {
   return (
     <div>
       <div>2022-09-19 </div>
+      테스트
       <div>
         {time.toLocaleDateString()} {time.toLocaleTimeString()}
       </div>
